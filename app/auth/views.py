@@ -13,7 +13,14 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         if User.get_user_by_email(form.email.data):
-            flash('Email already registered', 'warning')
+            flash('Email already registered 😥', 'warning')
+            return redirect(url_for('auth.register'))
+        elif User.get_user_by_username(form.username.data):
+            flash('Username already registered 😥', 'warning')
+            return redirect(url_for('auth.register'))
+        # check if password is gretaer than 8 characters
+        elif len(form.password.data) < 8:
+            flash('Password should be at least 8 characters long 😥', 'warning')
             return redirect(url_for('auth.register'))
         else:
             user = User(email=form.email.data,

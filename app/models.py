@@ -51,6 +51,11 @@ class User(UserMixin, db.Model):
     def get_user_by_email(email):
         return User.query.filter_by(email=email).first()
 
+    # search for user username from user table and check if username already exists
+    @staticmethod
+    def get_user_by_username(username):
+        return User.query.filter_by(username=username).first()
+
     def __repr__(self):
         return '<User %r>' % self.username
 
