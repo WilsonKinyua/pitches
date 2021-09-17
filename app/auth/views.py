@@ -8,7 +8,7 @@ from .. import db
 
 
 # register new user
-@auth.route('/register')
+@auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():

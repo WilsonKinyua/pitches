@@ -263,3 +263,8 @@ a {
 .login-container .checkbox {
   margin-top: 10px;
 }
+
+.login-container p {
+  margin-top: 10px;
+  font-size: 13px;
+}
