@@ -12,12 +12,16 @@ from .. import db
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(email=form.email.data,
-                    username=form.username.data, password=form.password.data)
-        db.session.add(user)
-        db.session.commit()
+        if User.get_user_by_email(form.email.data):
+            flash('Email already registered', 'warning')
+            return redirect(url_for('auth.register'))
+        else:
+            user = User(email=form.email.data,
+                        username=form.username.data, password=form.password.data)
+            db.session.add(user)
+            db.session.commit()
 
-        return redirect(url_for('auth.login'))
+            return redirect(url_for('auth.login'))
     title = "Create New Account"
     return render_template('auth/register.html', title=title, registration_form=form)
 

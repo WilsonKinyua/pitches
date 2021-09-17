@@ -31,7 +31,7 @@ class User(UserMixin, db.Model):
     about_me = db.Column(db.Text())
     profile_image = db.Column(db.String(64))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    joined_when = db.Column(db.DateTime(), default=datetime.utcnow)
+    member_since = db.Column(db.DateTime(), default=datetime.utcnow)
     # last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
     # avatar_hash = db.Column(db.String(32))
 
@@ -45,6 +45,11 @@ class User(UserMixin, db.Model):
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    # search for user email from user table and check if email already exists
+    @staticmethod
+    def get_user_by_email(email):
+        return User.query.filter_by(email=email).first()
 
     def __repr__(self):
         return '<User %r>' % self.username

@@ -268,3 +268,7 @@ a {
   margin-top: 10px;
   font-size: 13px;
 }
+
+.login-container .form-group {
+  margin-top: 10px;
+}
