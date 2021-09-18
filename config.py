@@ -13,8 +13,6 @@ class Config:
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
-    # SUBJECT_PREFIX = 'PitchEasy'
-    # SENDER_EMAIL = 'wilsonkinyuam@gmail.com'
 
     # simple mde  configurations
     SIMPLEMDE_JS_IIFE = True

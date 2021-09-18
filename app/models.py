@@ -2,7 +2,7 @@ from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
-
+from . import login_manager
 
 # roles table
 
@@ -55,6 +55,10 @@ class User(UserMixin, db.Model):
     @staticmethod
     def get_user_by_username(username):
         return User.query.filter_by(username=username).first()
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 
     def __repr__(self):
         return '<User %r>' % self.username

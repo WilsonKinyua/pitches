@@ -33,9 +33,9 @@ def create_app(config_name):
     bootstrap.init_app(app)
     login_manager.init_app(app)
 
-    @login_manager.user_loader
-    def load_user(user_id):
-        return None
+    # @login_manager.user_loader
+    # def load_user(user_id):
+    #     return None
 
     mail.init_app(app)
     simple.init_app(app)
