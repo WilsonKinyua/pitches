@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macro%}
+
+{% block content %}
+<!-- section latest-->
+<section class="latest-pitches">
+    <div class="m-4">
+        <h3>Latest Pitches</h3>
+        <div class="row">
+            {{ macro.displayPitches(pitches) }}
+        </div>
+    </div>
+</section>
+{% endblock %}
