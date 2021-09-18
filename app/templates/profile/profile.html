@@ -12,6 +12,24 @@
     </div> -->
     <div class="container mt-5">
         <div class="row">
+            <div class="col-md-12">
+                 <!-- Flash message -->
+                 {% with messages = get_flashed_messages(with_categories=true) %}
+                 {% if messages %}
+                 {% for category, message in messages %}
+                 <div class="alert alert-{{ category }} d-flex align-items-center" role="alert">
+                     <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img"
+                         aria-label="{{ category }}:">
+                         <use xlink:href="#exclamation-triangle-fill" />
+                     </svg>
+                     <div>
+                         {{ message }}
+                     </div>
+                 </div>
+                 {% endfor %}
+                 {% endif %}
+                 {% endwith %}
+            </div>
             <div class="col-md-4">
                 <div class="card">
                     {% if user.profile_image %}
@@ -35,7 +53,7 @@
                         <p>{{ current_user.username }}</p>
                         <p>
                             {% if current_user.about_me %}
-                                <small>{{ current_user.about_me }}</small>
+                            <small>{{ current_user.about_me }}</small>
                             {% else %}
                             <span class="text-danger">No about me</span>
                             {% endif %}
@@ -73,6 +91,28 @@
                     </div>
                 </div>
 
+                <!-- my pitches -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h4 class="card-title">My Pitches</h4>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                    <i class="fa fa-plus"></i> Add a Pitch
+                                </button>
+                                <!-- Modal -->
+                                {% include 'modals/add_pitch.html' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- includes pitches.html from templates folder -->
+                        {% include 'pitches.html' %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -83,9 +83,9 @@ class Category(db.Model):
 class Post(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(64))
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
-    title = db.Column(db.String(64))
     body = db.Column(db.Text)
     slug = db.Column(db.String(64), unique=True)
     picture_path = db.Column(db.String(64))

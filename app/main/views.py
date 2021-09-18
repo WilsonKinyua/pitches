@@ -4,9 +4,11 @@ from flask_login import login_required, current_user
 from ..models import User, Role, Post, Comment, Dislike, Like, Category
 from .. import db, photos
 from .forms import UpdateProfileForm
-
+from slugify import slugify
 
 # homepage
+
+
 @main.route('/')
 # @login_required
 def index():
@@ -45,4 +47,49 @@ def update_profile_pic():
         path = f'photos/{filename}'
         current_user.profile_image = path
         db.session.commit()
+    return redirect(url_for('.profile', username=current_user.username))
+
+
+# create a new pitch
+@main.route('/new_pitch', methods=['GET', 'POST'])
+@login_required
+def new_pitch():
+
+    title = request.args.get('title')
+    author_id = request.args.get('author_id')
+    category_id = request.args.get('category_id')
+    body = request.args.get('body')
+
+    # make a new slug from the title
+    slug = slugify(title)
+    # check if the slug already exists
+    pitch = Post.query.filter_by(slug=slug).first()
+    if pitch is not None:
+        # if it exists, append a number to the slug
+        slug = slugify(title) + '-' + str(pitch.id)
+
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        picture_path = path
+        new_pitch = Post(
+            title=title,
+            body=body,
+            author_id=author_id,
+            category_id=category_id,
+            slug=slug,
+            picture_path=picture_path
+        )
+    else:
+        new_pitch = Post(
+            title=title,
+            body=body,
+            author_id=author_id,
+            category_id=category_id,
+            slug=slug
+        )
+
+        db.session.add(new_pitch)
+        db.session.commit()
+    flash('Your pitch has been created successfully!', 'success')
     return redirect(url_for('.profile', username=current_user.username))
