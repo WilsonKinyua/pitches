@@ -16,6 +16,35 @@ class Role(db.Model):
     def __repr__(self):
         return '<Role %r>' % self.name
 
+# posts table
+
+
+class Post(db.Model):
+    __tablename__ = 'posts'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(64))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    body = db.Column(db.Text)
+    slug = db.Column(db.String(64), unique=True)
+    picture_path = db.Column(db.String(64))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    # gets posts by category
+    @classmethod
+    def get_posts_by_category(cls, category_id):
+        return cls.query.filter_by(category_id=category_id).order_by(cls.timestamp.desc())
+
+    # gets posts by author
+    @classmethod
+    def get_posts_by_author(cls, user_id):
+        return cls.query.filter_by(user_id=user_id).order_by(cls.timestamp.desc())
+
+    # save post
+    def save_post(self):
+        db.session.add(self)
+        db.session.commit()
+
 
 # users table
 class User(UserMixin, db.Model):
@@ -32,6 +61,9 @@ class User(UserMixin, db.Model):
     profile_image = db.Column(db.String(64))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     member_since = db.Column(db.DateTime(), default=datetime.utcnow)
+    # post_id = db.relationship('posts', backref='posts', lazy="dynamic")
+    post = db.relationship('Post', backref='user', lazy="dynamic")
+
     # last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
     # avatar_hash = db.Column(db.String(32))
 
@@ -77,42 +109,11 @@ class Category(db.Model):
         return '<Category %r>' % self.name
 
 
-# posts table
-
-
-class Post(db.Model):
-    __tablename__ = 'posts'
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64))
-    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
-    body = db.Column(db.Text)
-    slug = db.Column(db.String(64), unique=True)
-    picture_path = db.Column(db.String(64))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-
-    # gets posts by category
-    @classmethod
-    def get_posts_by_category(cls, category_id):
-        return cls.query.filter_by(category_id=category_id).order_by(cls.timestamp.desc())
-
-    # gets posts by author
-    @classmethod
-    def get_posts_by_author(cls, author_id):
-        return cls.query.filter_by(author_id=author_id).order_by(cls.timestamp.desc())
-
-    # save post
-    def save_post(self):
-        db.session.add(self)
-        db.session.commit()
-
 # comments table
-
-
 class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
-    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     body = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
@@ -130,8 +131,8 @@ class Comment(db.Model):
 
     # get comment author details from author id
     @classmethod
-    def get_comment_author(cls, author_id):
-        author = User.query.filter_by(id=author_id).first()
+    def get_comment_author(cls, user_id):
+        author = User.query.filter_by(id=user_id).first()
         return author
 
 # class to save likes
@@ -157,8 +158,8 @@ class Like(db.Model):
 
     # get like author details from author id
     @classmethod
-    def get_like_author(cls, author_id):
-        author = User.query.filter_by(id=author_id).first()
+    def get_like_author(cls, user_id):
+        author = User.query.filter_by(id=user_id).first()
         return author
 
 # class to save dislikes
@@ -184,6 +185,6 @@ class Dislike(db.Model):
 
     # get like author details from author id
     @classmethod
-    def get_dislike_author(cls, author_id):
-        author = User.query.filter_by(id=author_id).first()
+    def get_dislike_author(cls, user_id):
+        author = User.query.filter_by(id=user_id).first()
         return author

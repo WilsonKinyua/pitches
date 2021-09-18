@@ -8,11 +8,22 @@ from slugify import slugify
 
 # homepage
 
+def getAuthor(id):
+    user = User.query.filter_by(id=id).first()
+    return user
+
 
 @main.route('/')
 # @login_required
 def index():
-    return render_template('index.html')
+    """
+        View root page function that returns the index page and its data
+    """
+    # get pitches with their author and category and display them on the index page in the newest order of creation
+    pitches = Post.query.order_by(Post.timestamp.desc()).all()
+    
+    
+    return render_template('index.html', pitches=pitches)
 
 
 # profile page
@@ -35,9 +46,9 @@ def profile(username):
     form.username.data = user.username
     form.about_me.data = user.about_me
 
-    # get all the posts of the current user with its category 
-    pitches = Post.get_posts_by_author(user.id).order_by(Post.timestamp.desc()).all()
-    categories = Category.query.all()
+    # get all the posts of the current user with its category
+    pitches = Post.get_posts_by_author(
+        user.id).order_by(Post.timestamp.desc()).all()
 
     return render_template('profile/profile.html', user=user, form=form, pitches=pitches)
 
@@ -60,7 +71,7 @@ def update_profile_pic():
 def new_pitch():
 
     title = request.args.get('title')
-    author_id = request.args.get('author_id')
+    user_id = request.args.get('user_id')
     category_id = request.args.get('category_id')
     body = request.args.get('body')
 
@@ -80,10 +91,10 @@ def new_pitch():
     new_pitch = Post(
         title=title,
         body=body,
-        author_id=author_id,
+        user_id=user_id,
         category_id=category_id,
         slug=slug,
-        picture_path=picture_path
+        # picture_path=picture_path
     )
     db.session.add(new_pitch)
     db.session.commit()

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: fa8148e81c4a
+Revision ID: c9310bbef106
 Revises: 
-Create Date: 2021-09-18 00:06:07.638587
+Create Date: 2021-09-18 18:57:40.503048
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'fa8148e81c4a'
+revision = 'c9310bbef106'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -34,8 +34,8 @@ def upgrade():
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=64), nullable=True),
-    sa.Column('email', sa.String(length=64), nullable=True),
     sa.Column('username', sa.String(length=64), nullable=True),
+    sa.Column('email', sa.String(length=64), nullable=True),
     sa.Column('password_hash', sa.String(length=128), nullable=True),
     sa.Column('about_me', sa.Text(), nullable=True),
     sa.Column('profile_image', sa.String(length=64), nullable=True),
@@ -48,27 +48,27 @@ def upgrade():
     op.create_index(op.f('ix_users_username'), 'users', ['username'], unique=True)
     op.create_table('posts',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('author_id', sa.Integer(), nullable=True),
-    sa.Column('category_id', sa.Integer(), nullable=True),
     sa.Column('title', sa.String(length=64), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('category_id', sa.Integer(), nullable=True),
     sa.Column('body', sa.Text(), nullable=True),
     sa.Column('slug', sa.String(length=64), nullable=True),
     sa.Column('picture_path', sa.String(length=64), nullable=True),
     sa.Column('timestamp', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['author_id'], ['users.id'], ),
     sa.ForeignKeyConstraint(['category_id'], ['categories.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('slug')
     )
     op.create_index(op.f('ix_posts_timestamp'), 'posts', ['timestamp'], unique=False)
     op.create_table('comments',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('author_id', sa.Integer(), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('post_id', sa.Integer(), nullable=True),
     sa.Column('body', sa.Text(), nullable=True),
     sa.Column('timestamp', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['author_id'], ['users.id'], ),
     sa.ForeignKeyConstraint(['post_id'], ['posts.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_comments_timestamp'), 'comments', ['timestamp'], unique=False)

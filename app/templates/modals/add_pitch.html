@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <form action="{{ url_for('main.new_pitch')}}" enctype="multipart/form-data">
                     <div class="row">
-                        <input type="hidden" name="author_id" value="{{ current_user.id}}">
+                        <input type="hidden" name="user_id" value="{{ current_user.id}}">
                         <div class="col-md-7">
                             <div class="mb-2">
                                 <label for="Title" class="mb-2">Title <span class="text-danger">*</span></label>
@@ -21,10 +21,10 @@
                                 <label for="Category" class="mb-2">Category <span class="text-danger">*</span></label>
                                 <select class="form-control" name="category_id" required>
                                     <option value="1">Business</option>
-                                    <option value="2">Technology</option>
+                                    <!-- <option value="2">Technology</option>
                                     <option value="3">Entertainment</option>
                                     <option value="4">Health</option>
-                                    <option value="5">Sports</option>
+                                    <option value="5">Sports</option> -->
                                 </select>
                             </div>
                         </div>

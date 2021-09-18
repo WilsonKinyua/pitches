@@ -1,0 +1,44 @@
+<!-- displaying posts -->
+{% macro displayPitches(pitch_list) %}
+
+{% for pitch in pitch_list %}
+<div class="col-md-3">
+    <a href="">
+        <div class="card latest-cards">
+            <div class="latest-cards-heading"
+                style="background-image: url(http://jellywp.com/theme/disto/demo/wp-content/uploads/2019/03/toa-heftiba-686126-unsplash-400x280.jpg);">
+                <div class="latest-content">
+                    <button class="btn btn-success btn-sm mb-2">{{ pitch.category }}</button>
+                </div>
+            </div>
+            <div class="latest-cards-body m-2">
+                <h5>
+                    {{ pitch.title }}
+                </h5>
+                <div class="d-flex justify-content-start">
+                    <div class="thumbnail">
+                        {% if pitch.user.profile_image %}
+                            <img src="{{url_for('static',filename=pitch.user.profile_image)}}" alt="{{ pitch.title }}">
+                        {% else %}
+                            <img src="https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg" alt="{{ pitch.title }}">
+                        {% endif %}
+                    </div>
+                    <div class="mt-2">
+                        <h6>{{ pitch.user.name }}</h6>
+                    </div>
+                    <div class="mt-2">
+                        <h6> <i class="fa fa-clock"></i> <span>
+                                {{ pitch.timestamp.strftime("%d %b %Y") }}
+                            </span>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+
+
+{% endfor %}
+
+{% endmacro %}
