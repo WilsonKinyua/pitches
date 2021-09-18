@@ -12,9 +12,12 @@
                 <div class="login-card mt-5">
                     <div class="card-body">
                         <!-- Flash message -->
-                        {% for message in get_flashed_messages() %}
-                        <div class="alert alert-danger d-flex align-items-center" role="alert">
-                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img"
+                                aria-label="{{ category }}:">
                                 <use xlink:href="#exclamation-triangle-fill" />
                             </svg>
                             <div>
@@ -22,7 +25,8 @@
                             </div>
                         </div>
                         {% endfor %}
-
+                        {% endif %}
+                        {% endwith %}
                         <!-- register form -->
                         <div class="login-container">
                             {{ wtf.quick_form(registration_form) }}

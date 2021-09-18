@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% import 'bootstrap/wtf.html' as wtf%}
 {% block content %}
+<style>
+    .alert {
+        color: red !important;
+    }
+</style>
 <section class="login-container">
     <div class="container-header">
         <h3 class="container-title">Login To Access Your Account</h3>
@@ -12,9 +17,12 @@
                 <div class="login-card mt-5">
                     <div class="card-body">
                         <!-- Flash message -->
-                        {% for message in get_flashed_messages() %}
-                        <div class="alert alert-danger d-flex align-items-center" role="alert">
-                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img"
+                                aria-label="{{ category }}:">
                                 <use xlink:href="#exclamation-triangle-fill" />
                             </svg>
                             <div>
@@ -22,6 +30,8 @@
                             </div>
                         </div>
                         {% endfor %}
+                        {% endif %}
+                        {% endwith %}
                         <div class="login-container">
                             {{ wtf.quick_form(login_form) }}
                         </div>
