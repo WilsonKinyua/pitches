@@ -36,6 +36,25 @@
                                 {{ current_user.member_since.strftime('%d %b %Y') }}</span></h6>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card p-2">
+                            {% if user == current_user %}
+                            <form action="{{url_for('main.update_profile_pic',uname=user.username)}}" method="post"
+                                enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input type="file" name="photo" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input type="submit" class="btn btn-dark btn-lg btn-sm" value="Update Picture">
+                                    </div>
+                                </div>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-8">
                 <div class="card">
@@ -45,6 +64,7 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>

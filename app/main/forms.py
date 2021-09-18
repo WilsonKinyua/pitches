@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField,FileField
+from wtforms.fields.simple import TextAreaField
 from wtforms.validators import Required, Email, Length, EqualTo
 from ..models import User
 from wtforms import ValidationError
@@ -8,14 +9,15 @@ from wtforms import ValidationError
 
 
 class UpdateProfileForm(FlaskForm):
+    name = StringField('Name', validators=[Required(), Length(1, 64)])
+    username = StringField('Username', validators=[Required(), Length(1, 64)])
     email = StringField('Email', validators=[
                         Required(), Length(1, 64), Email()])
-    username = StringField('Username', validators=[Required(), Length(1, 64)])
+    about_me = TextAreaField('About me', validators=[Required(), Length(1, 100)])
+    # profile_pic = FileField()
     # confirmed = BooleanField('Confirmed')
     # role = StringField('Role', validators=[Required()])
-    name = StringField('Name', validators=[Required(), Length(1, 64)])
     # location = StringField('Location', validators=[Required(), Length(1, 64)])
-    about_me = StringField('About me', validators=[Required(), Length(1, 64)])
     submit = SubmitField('Update Profile')
 
     # def __init__(self, user, *args, **kwargs):

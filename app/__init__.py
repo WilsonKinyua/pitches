@@ -17,7 +17,7 @@ login_manager = LoginManager()
 
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
-
+photos = UploadSet('photos', IMAGES)
 
 # creating the application
 
@@ -49,6 +49,6 @@ def create_app(config_name):
     app.register_blueprint(auth_blueprint, url_prefix='/user-account')
 
     # configure UploadSet
-    # configure_uploads(app, photos)
+    configure_uploads(app, photos)
 
     return app
