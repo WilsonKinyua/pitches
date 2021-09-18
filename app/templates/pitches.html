@@ -10,12 +10,23 @@
         </tr>
     </thead>
     <tbody>
+        {% for pitch in pitches %}
         <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ pitch.category }}</td>
+            <td>{{ pitch.title }}</td>
+            <td>{{ pitch.body }}</td>
+            <td>
+            </td>
+            <td>{{ pitch.timestamp.strftime('%d %b %Y') }}</td>
+        </tr>
+        {% endfor %}
+        <!-- <tr>
             <th scope="row">1</th>
             <td>Mark</td>
             <td>Otto</td>
             <td>@mdo</td>
         </tr>
-        <tr>
+        <tr> -->
     </tbody>
 </table>

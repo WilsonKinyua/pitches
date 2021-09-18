@@ -35,7 +35,11 @@ def profile(username):
     form.username.data = user.username
     form.about_me.data = user.about_me
 
-    return render_template('profile/profile.html', user=user, form=form)
+    # get all the posts of the current user with its category 
+    pitches = Post.get_posts_by_author(user.id).order_by(Post.timestamp.desc()).all()
+    categories = Category.query.all()
+
+    return render_template('profile/profile.html', user=user, form=form, pitches=pitches)
 
 
 # update profile picture
@@ -72,24 +76,16 @@ def new_pitch():
         filename = photos.save(request.files['photo'])
         path = f'photos/{filename}'
         picture_path = path
-        new_pitch = Post(
-            title=title,
-            body=body,
-            author_id=author_id,
-            category_id=category_id,
-            slug=slug,
-            picture_path=picture_path
-        )
-    else:
-        new_pitch = Post(
-            title=title,
-            body=body,
-            author_id=author_id,
-            category_id=category_id,
-            slug=slug
-        )
 
-        db.session.add(new_pitch)
-        db.session.commit()
-    flash('Your pitch has been created successfully!', 'success')
+    new_pitch = Post(
+        title=title,
+        body=body,
+        author_id=author_id,
+        category_id=category_id,
+        slug=slug,
+        picture_path=picture_path
+    )
+    db.session.add(new_pitch)
+    db.session.commit()
+    flash('New pitch created successfully!', 'success')
     return redirect(url_for('.profile', username=current_user.username))
