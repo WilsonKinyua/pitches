@@ -230,7 +230,7 @@ a {
   border-radius: 5px;
   box-shadow: 0 0 11px 5px #673ab71a;
   margin-bottom: 30px;
-  padding: 10px 5px;
+  padding: 5px 2px;
   transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
 }
@@ -280,4 +280,17 @@ a {
 
 .login-container .help-block {
   color: #ff0000;
+}
+
+
+/* profile page */
+.card-img-top {
+  border-radius: 50%;
+  display: block;
+  float: none;
+  height: 180px;
+  line-height: 32px;
+  margin: 0 auto;
+  width: 180px;
+  margin-top: 6px;
 }
