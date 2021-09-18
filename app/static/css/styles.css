@@ -29,13 +29,13 @@ a {
 }
 
 .btn-success {
-  background-color: #d800f9;
-  border-color: #d800f9;
+  background-color: #800080;
+  border-color: #800080;
 }
 
 .btn-success:hover {
-  background-color: #d800f9;
-  border-color: #d800f9;
+  background-color: #800080;
+  border-color: #800080;
 }
 
 .btn-secondary,

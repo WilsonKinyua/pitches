@@ -1,5 +1,11 @@
+{% import 'bootstrap/wtf.html' as wtf%}
 {% extends "base.html" %}
 {% block content %}
+<style>
+    .form-control {
+        margin-bottom: 10px;
+    }
+</style>
 <section class="profile">
     <!-- <div class="container-header">
         <h3 class="container-title">My Account</h3>
@@ -11,22 +17,32 @@
                     <img src="https://avatars.githubusercontent.com/u/44901716?v=4" class="card-img-top"
                         alt="My profile picture">
                     <div class="card-body text-center">
-                        <h4 class="card-text">John Mwangi</h4>
-                        <p>username</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis minima sapiente
-                            perferendis aliquam saepe nesciunt quis, autem assumenda ad ducimus!</p>
-                        <h6>Jioned on: <span class="badge rounded-pill bg-secondary text-white">2021</span> </h6>
+                        <h4 class="card-text">
+                            {% if current_user.name == None %}
+                            <span class="text-danger">No name</span>
+                            {% else %}
+                            {{ current_user.name }}
+                            {% endif %}
+                        </h4>
+                        <p>{{ current_user.username }}</p>
+                        <p>
+                            {% if current_user.about_me %}
+                            {{ current_user.about_me }}
+                            {% else %}
+                            <span class="text-danger">No about me</span>
+                            {% endif %}
+                        </p>
+                        <h6>Jioned on: <span class="badge rounded-pill bg-secondary text-white">
+                                {{ current_user.member_since.strftime('%d %b %Y') }}</span></h6>
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
                 <div class="card">
                     <div class="form-update-profile">
-                        <form>
-                            <div class="row m-3">
-                                
-                            </div>
-                        </form>
+                        <div class="row m-3">
+                            {{wtf.quick_form(form)}}
+                        </div>
                     </div>
                 </div>
             </div>
