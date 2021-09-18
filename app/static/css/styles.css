@@ -52,6 +52,10 @@ a {
   color: white;
   margin-top: 10px;
 }
+
+.btn-outline-danger:hover {
+  color: white !important;
+}
 /* navbar */
 .navbar-brand {
   font-size: 2rem;
@@ -63,12 +67,13 @@ a {
   color: black;
 }
 .navbar-expand-lg {
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
     to right,
     rgb(30, 60, 114) 0%,
     rgb(42, 82, 152) 51%,
     rgb(30, 60, 114) 100%
-  );
+  ); */
+  background-color: #800080;
 }
 
 .navbar-expand-lg li a {
