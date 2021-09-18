@@ -2,25 +2,25 @@
 {% macro displayPitches(pitch_list) %}
 
 {% for pitch in pitch_list %}
-<div class="col-md-3">
-    <a href="">
+<div class="col-md-4">
+    <a href="{{ url_for('main.pitch', id = pitch.id)}}">
         <div class="card latest-cards">
-            <div class="latest-cards-heading"
-                style="background-image: url(http://jellywp.com/theme/disto/demo/wp-content/uploads/2019/03/toa-heftiba-686126-unsplash-400x280.jpg);">
-                <div class="latest-content">
-                    <button class="btn btn-success btn-sm mb-2">{{ pitch.category.name }}</button>
-                </div>
-            </div>
             <div class="latest-cards-body m-2">
-                <h5>
-                    {{ pitch.title }}
-                </h5>
+                <div class="card-header">
+                    <h5>
+                        {{ pitch.title }}
+                    </h5>
+                </div>
+                <p class="text-black">
+                    {{ pitch.body }}
+                </p>
                 <div class="d-flex justify-content-start">
                     <div class="thumbnail">
                         {% if pitch.user.profile_image %}
-                            <img src="{{url_for('static',filename=pitch.user.profile_image)}}" alt="{{ pitch.title }}">
+                        <img src="{{url_for('static',filename=pitch.user.profile_image)}}" alt="{{ pitch.title }}">
                         {% else %}
-                            <img src="https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg" alt="{{ pitch.title }}">
+                        <img src="https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg"
+                            alt="{{ pitch.title }}">
                         {% endif %}
                     </div>
                     <div class="mt-2">

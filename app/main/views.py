@@ -83,10 +83,10 @@ def new_pitch():
         # if it exists, append a number to the slug
         slug = slugify(title) + '-' + str(pitch.id)
 
-    if 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        path = f'photos/{filename}'
-        picture_path = path
+    # if 'photo' in request.files:
+    #     filename = photos.save(request.files['photo'])
+    #     path = f'photos/{filename}'
+    #     picture_path = path
 
     new_pitch = Post(
         title=title,
@@ -100,3 +100,40 @@ def new_pitch():
     db.session.commit()
     flash('New pitch created successfully!', 'success')
     return redirect(url_for('.profile', username=current_user.username))
+
+# get pitch details by id
+@main.route('/pitch/<int:id>', methods=['GET', 'POST'])
+def pitch(id):
+    pitch = Post.query.get(id)
+    if pitch is None:
+        abort(404)
+    # get the comments of the pitch
+    # comments = Comment.query.filter_by(pitch_id=id).order_by(Comment.timestamp.desc()).all()
+    return render_template('single_pitch.html', 
+                                        pitch=pitch,
+                                        #  comments=comments
+                                        )
+
+
+# add a comment to a pitch
+# @main.route('/add_comment/<int:id>', methods=['GET', 'POST'])
+# @login_required
+# def add_comment(id):
+#     pitch = Post.query.get(id)
+#     if pitch is None:
+#         abort(404)
+#     form = CommentForm()
+#     if form.validate_on_submit():
+#         comment = Comment(
+#             body=form.body.data,
+#             pitch_id=id,
+#             user_id=current_user.id
+#         )
+#         db.session.add(comment)
+#         db.session.commit()
+#         flash('Your comment has been posted!', 'success')
+#         return redirect(url_for('.pitch', id=id))
+#     return render_template('add_comment.html',
+#                            title='Comment',
+#                            form=form,
+#                            pitch=pitch)
