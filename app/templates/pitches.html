@@ -13,7 +13,7 @@
         {% for pitch in pitches %}
         <tr>
             <td>{{ loop.index }}</td>
-            <td>{{ pitch.category }}</td>
+            <td><button class="btn btn-warning btn-sm">{{ pitch.category.name }}</button></td>
             <td>{{ pitch.title }}</td>
             <td>{{ pitch.body }}</td>
             <td>

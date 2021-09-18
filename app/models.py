@@ -4,9 +4,20 @@ from flask_login import UserMixin
 from datetime import datetime
 from . import login_manager
 
+# categories table
+
+
+class Category(db.Model):
+    __tablename__ = 'categories'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    picture_path = db.Column(db.String(64))
+    post = db.relationship('Post',backref='category',lazy='dynamic')
+
+    def __repr__(self):
+        return '<Category %r>' % self.name
+
 # roles table
-
-
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
@@ -29,6 +40,7 @@ class Post(db.Model):
     slug = db.Column(db.String(64), unique=True)
     picture_path = db.Column(db.String(64))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+   
 
     # gets posts by category
     @classmethod
@@ -94,19 +106,6 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
-
-
-# categories table
-
-
-class Category(db.Model):
-    __tablename__ = 'categories'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
-    picture_path = db.Column(db.String(64))
-
-    def __repr__(self):
-        return '<Category %r>' % self.name
 
 
 # comments table
