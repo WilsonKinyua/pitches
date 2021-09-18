@@ -14,8 +14,16 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
-                    <img src="https://avatars.githubusercontent.com/u/44901716?v=4" class="card-img-top"
-                        alt="My profile picture">
+                    {% if user.profile_image %}
+
+                    <img src="{{url_for('static',filename=user.profile_image)}}" alt="" class="card-img-top">
+
+                    {%else%}
+                    <img src="https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg"
+                        class="card-img-top" alt="My profile picture">
+
+                    {% endif %}
+
                     <div class="card-body text-center">
                         <h4 class="card-text">
                             {% if current_user.name == None %}
@@ -27,7 +35,7 @@
                         <p>{{ current_user.username }}</p>
                         <p>
                             {% if current_user.about_me %}
-                            {{ current_user.about_me }}
+                                <small>{{ current_user.about_me }}</small>
                             {% else %}
                             <span class="text-danger">No about me</span>
                             {% endif %}
@@ -64,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
