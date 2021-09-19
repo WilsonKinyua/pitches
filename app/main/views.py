@@ -202,7 +202,7 @@ def delete_pitch(id):
         for comment in pitch.comment:
             db.session.delete(comment)
             db.session.commit()
-            
+
     if pitch.like:
         for like in pitch.like:
             db.session.delete(like)
@@ -217,3 +217,16 @@ def delete_pitch(id):
     db.session.commit()
     flash('You have successfully deleted the pitch!', 'danger')
     return redirect(url_for('.profile', username=current_user.username))
+
+
+# ==========================================================
+# ==================== FILTER PITCHES BY CATEGORY ============================
+# ==========================================================
+
+# filter pitches by category
+@main.route('/category/<int:category_id>', methods=['GET', 'POST'])
+@login_required
+def filter_pitches_by_category(category_id):
+    pitches = Post.query.filter_by(category_id=category_id).all()
+    category = Category.query.get(category_id)
+    return render_template('filter_pitches_by_category.html', pitches=pitches, category=category)

@@ -13,28 +13,40 @@
             </ul>
             <ul class="navbar-nav nav-right">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Home</a>
+                    <a class="nav-link active" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Trending</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Latest Pitches</a>
+                    <a class="nav-link"
+                        href="{{ url_for('main.filter_pitches_by_category',category_id=1)}}">Business</a>
                 </li>
                 <!-- <li class="nav-item">
-                    <a class="nav-link" href="#">Technology</a>
+                    <a class="nav-link" href="{{ url_for('main.filter_pitches_by_category',category_id=2)}}">Political</a>
                 </li> -->
-
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="{{ url_for('main.filter_pitches_by_category',category_id=3)}}">Motivational</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.filter_pitches_by_category',category_id=4)}}">Pick Up
+                        Lines</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.filter_pitches_by_category',category_id=5)}}">Technology</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.filter_pitches_by_category',category_id=6)}}">Fashion</a>
+                </li>
                 {% if current_user.is_authenticated %}
-                <li class="nav-item">
-                    <!-- {{current_user.username}} -->
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline-danger"
-                        href="{{ url_for('main.profile', username=current_user.username)}}">My account</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ url_for('auth.logout') }}" class="nav-link btn btn-sm ">Logout</a>
-                </li>
+                <li class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle btn btn-outline-danger" href="#" id="navbarDropdown"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{current_user.username}}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item text-dark"
+                                href="{{ url_for('main.profile', username=current_user.username)}}">My account</a></li>
+                        <li><a class="dropdown-item text-dark" href="{{ url_for('auth.logout') }}">Logout</a></li>
+                    </ul>
                 </li>
                 {% else %}
                 <li class="nav-item">
