@@ -105,6 +105,7 @@ def new_pitch():
 
 
 @main.route('/pitch/<int:id>', methods=['GET', 'POST'])
+@login_required
 def pitch(id):
     # get all comments of the pitch
     comments = Comment.query.filter_by(post_id=id).all()
@@ -120,6 +121,7 @@ def pitch(id):
         )
         db.session.add(comment)
         db.session.commit()
+        form.body.data = ''
         flash('Your comment has been posted successfully!', 'success')
 
     return render_template('single_pitch.html',
