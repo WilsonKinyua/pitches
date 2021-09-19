@@ -28,8 +28,8 @@ def register():
             db.session.add(user)
             db.session.commit()
             # send user a welcome email
-            mail_message('Welcome to PitchEasy',
-                         'email/welcome_user', user.email, user=user)
+            # mail_message('Welcome to PitchEasy',
+            #              'email/welcome_user', user.email, user=user)
             flash('User Account created successfully!', 'success')
             return redirect(url_for('auth.login'))
     title = "Create New Account"
