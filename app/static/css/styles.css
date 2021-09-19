@@ -66,7 +66,7 @@ a {
 .navbar-brand:hover {
   color: black;
 }
-.navbar-expand-lg {
+.navbar-expand-lg, footer {
   /* background-image: linear-gradient(
     to right,
     rgb(30, 60, 114) 0%,
@@ -303,4 +303,17 @@ a {
 
 .text-underline {
   text-decoration: underline;
+}
+
+footer {
+  padding: 10px;
+  color: white;
+}
+
+footer a {
+  color: rgb(26, 25, 25);
+}
+
+.latest-cards {
+  /* height: 290px; */
 }

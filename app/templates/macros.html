@@ -2,7 +2,7 @@
 {% macro displayPitches(pitch_list) %}
 
 {% for pitch in pitch_list %}
-<div class="col-md-4">
+<div class="col-md-3">
     <a href="{{ url_for('main.pitch', id = pitch.id)}}">
         <div class="card latest-cards">
             <div class="latest-cards-body m-2">
@@ -26,13 +26,18 @@
                     </div>
                 </div>
                 <div class="card-header">
-                    <h5>
+                    <h6>
                         {{ pitch.title }}
-                    </h5>
+                    </h6>
                 </div>
                 <p class="text-black">
-                    {{ pitch.body }}
+                    {{ pitch.body[:100] }} ....
                 </p>
+                <!-- read more -->
+                <a class="text-center text-danger">
+                    Read More
+                    <i class="fa fa-arrow-right"></i>
+                </a>
                 <div class="d-flex justify-content-start text-black">
                     <div class="mt-2">
                         <!-- like button -->

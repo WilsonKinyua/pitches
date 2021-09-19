@@ -225,7 +225,6 @@ def delete_pitch(id):
 
 # filter pitches by category
 @main.route('/category/<int:category_id>', methods=['GET', 'POST'])
-@login_required
 def filter_pitches_by_category(category_id):
     pitches = Post.query.filter_by(category_id=category_id).all()
     category = Category.query.get(category_id)
