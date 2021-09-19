@@ -39,3 +39,8 @@ class UpdateProfileForm(FlaskForm):
 #     title = StringField('Pitch Title', validators=[Required(), Length(1, 64)])
 #     body = TextAreaField('Pitch Content', validators=[Required()])
 #     submit = SubmitField('Submit')
+
+# comment form class
+class CommentForm(FlaskForm):
+    body = TextAreaField('Comment', validators=[Required()])
+    submit = SubmitField('Submit')

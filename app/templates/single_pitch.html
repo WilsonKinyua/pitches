@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
 <div class="row">
     <!-- <div class="col-md-12">
@@ -18,11 +18,15 @@
                 <div class="card">
                     <div class="d-flex justify-content-start">
                         <div class="img-box">
-                            <img src="http://127.0.0.1:5000/static/photos/4354_8505_372574001623164824.jpeg" alt=""
-                                class="img-fluid">
+                            {% if pitch.user.profile_image %}
+                            <img src="{{url_for('static',filename=pitch.user.profile_image)}}" alt="{{ pitch.title }}">
+                            {% else %}
+                            <img src="https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg"
+                                alt="{{ pitch.title }}">
+                            {% endif %}
                         </div>
                         <div class="m-2 mt-4">
-                            <h6>John doe</h6>
+                            <h6>{{ pitch.user.name}}</h6>
                         </div>
                         <div class="m-2 mt-4">
                             <h6> <i class="fa fa-clock"></i> <span>
@@ -47,7 +51,8 @@
         <!-- add comment form -->
         <div class="card m-5">
             <div class="card-body">
-                <form method="POST" class="form-horizontal">
+                {{ wtf.quick_form(form) }}
+                <!-- <form method="POST" class="form-horizontal">
                     <div class="form-group">
                         <label for="comment" class="control-label">Comment</label>
                         <textarea class="form-control" id="comment" name="comment"
@@ -56,7 +61,7 @@
                     <div class="form-group mt-3">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
-                </form>
+                </form> -->
             </div>
         </div>
     </div>

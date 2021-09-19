@@ -3,10 +3,11 @@ from . import main
 from flask_login import login_required, current_user
 from ..models import User, Role, Post, Comment, Dislike, Like, Category
 from .. import db, photos
-from .forms import UpdateProfileForm
+from .forms import UpdateProfileForm, CommentForm
 from slugify import slugify
 
 # homepage
+
 
 def getAuthor(id):
     user = User.query.filter_by(id=id).first()
@@ -21,8 +22,7 @@ def index():
     """
     # get pitches with their author and category and display them on the index page in the newest order of creation
     pitches = Post.query.order_by(Post.timestamp.desc()).all()
-    
-    
+
     return render_template('index.html', pitches=pitches)
 
 
@@ -102,38 +102,25 @@ def new_pitch():
     return redirect(url_for('.profile', username=current_user.username))
 
 # get pitch details by id
+
+
 @main.route('/pitch/<int:id>', methods=['GET', 'POST'])
 def pitch(id):
     pitch = Post.query.get(id)
     if pitch is None:
         abort(404)
-    # get the comments of the pitch
-    # comments = Comment.query.filter_by(pitch_id=id).order_by(Comment.timestamp.desc()).all()
-    return render_template('single_pitch.html', 
-                                        pitch=pitch,
-                                        #  comments=comments
-                                        )
-
-
-# add a comment to a pitch
-# @main.route('/add_comment/<int:id>', methods=['GET', 'POST'])
-# @login_required
-# def add_comment(id):
-#     pitch = Post.query.get(id)
-#     if pitch is None:
-#         abort(404)
-#     form = CommentForm()
-#     if form.validate_on_submit():
-#         comment = Comment(
-#             body=form.body.data,
-#             pitch_id=id,
-#             user_id=current_user.id
-#         )
-#         db.session.add(comment)
-#         db.session.commit()
-#         flash('Your comment has been posted!', 'success')
-#         return redirect(url_for('.pitch', id=id))
-#     return render_template('add_comment.html',
-#                            title='Comment',
-#                            form=form,
-#                            pitch=pitch)
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(
+            body=form.body.data,
+            post_id=id,
+            user_id=current_user.id
+        )
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment has been posted!', 'success')
+    return render_template('single_pitch.html',
+                           pitch=pitch,
+                           form=form
+                           #  comments=comments
+                           )
