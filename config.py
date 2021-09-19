@@ -30,7 +30,7 @@ class TestConfig(Config):
 
 class ProdConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
-    pass
+    # pass
 
 
 class DevConfig(Config):
