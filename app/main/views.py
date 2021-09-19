@@ -129,3 +129,58 @@ def pitch(id):
                            form=form,
                            comments=comments
                            )
+
+# add a like to a pitch
+
+
+@main.route('/like/<int:id>', methods=['GET', 'POST'])
+@login_required
+def like(id):
+    pitch = Post.query.get(id)
+    if pitch is None:
+        abort(404)
+    # check if the user has already liked the pitch
+    like = Like.query.filter_by(user_id=current_user.id, post_id=id).first()
+    if like is not None:
+        # if the user has already liked the pitch, delete the like
+        db.session.delete(like)
+        db.session.commit()
+        flash('You have successfully unlike the pitch!', 'success')
+        return redirect(url_for('.index'))
+    # if the user has not liked the pitch, add a like
+    new_like = Like(
+        user_id=current_user.id,
+        post_id=id
+    )
+    db.session.add(new_like)
+    db.session.commit()
+    flash('You have successfully liked the pitch!', 'success')
+    return redirect(url_for('.index'))
+
+# add a dislike to a pitch
+
+
+@main.route('/dislike/<int:id>', methods=['GET', 'POST'])
+@login_required
+def dislike(id):
+    pitch = Post.query.get(id)
+    if pitch is None:
+        abort(404)
+    # check if the user has already disliked the pitch
+    dislike = Dislike.query.filter_by(
+        user_id=current_user.id, post_id=id).first()
+    if dislike is not None:
+        # if the user has already disliked the pitch, delete the dislike
+        db.session.delete(dislike)
+        db.session.commit()
+        flash('You have successfully undisliked the pitch!', 'success')
+        return redirect(url_for('.index'))
+    # if the user has not disliked the pitch, add a dislike
+    new_dislike = Dislike(
+        user_id=current_user.id,
+        post_id=id
+    )
+    db.session.add(new_dislike)
+    db.session.commit()
+    flash('You have successfully disliked the pitch!', 'success')
+    return redirect(url_for('.index'))

@@ -12,12 +12,14 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     picture_path = db.Column(db.String(64))
-    post = db.relationship('Post',backref='category',lazy='dynamic')
+    post = db.relationship('Post', backref='category', lazy='dynamic')
 
     def __repr__(self):
         return '<Category %r>' % self.name
 
 # roles table
+
+
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
@@ -26,6 +28,33 @@ class Role(db.Model):
 
     def __repr__(self):
         return '<Role %r>' % self.name
+
+# class to save likes
+
+
+class Like(db.Model):
+    __tablename__ = 'likes'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    # save like to database
+    def save_like(self):
+        db.session.add(self)
+        db.session.commit()
+
+    # get all likes related to a single post
+    @classmethod
+    def get_likes(cls, post_id):
+        likes = Like.query.filter_by(post_id=post_id).all()
+        return likes
+
+    # get like author details from author id
+    @classmethod
+    def get_like_author(cls, user_id):
+        author = User.query.filter_by(id=user_id).first()
+        return author
 
 # posts table
 
@@ -40,9 +69,11 @@ class Post(db.Model):
     slug = db.Column(db.String(64), unique=True)
     picture_path = db.Column(db.String(64))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-   
+    like = db.relationship('Like', backref='post', lazy='dynamic')
+    dislike = db.relationship('Dislike', backref='post', lazy='dynamic')
 
     # gets posts by category
+
     @classmethod
     def get_posts_by_category(cls, category_id):
         return cls.query.filter_by(category_id=category_id).order_by(cls.timestamp.desc())
@@ -75,6 +106,7 @@ class User(UserMixin, db.Model):
     member_since = db.Column(db.DateTime(), default=datetime.utcnow)
     # post_id = db.relationship('posts', backref='posts', lazy="dynamic")
     post = db.relationship('Post', backref='user', lazy="dynamic")
+    # post = db.relationship('Post', backref='user', lazy="dynamic")
 
     # last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
     # avatar_hash = db.Column(db.String(32))
@@ -134,32 +166,6 @@ class Comment(db.Model):
         author = User.query.filter_by(id=user_id).first()
         return author
 
-# class to save likes
-
-
-class Like(db.Model):
-    __tablename__ = 'likes'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-
-    # save like to database
-    def save_like(self):
-        db.session.add(self)
-        db.session.commit()
-
-    # get all likes related to a single post
-    @classmethod
-    def get_likes(cls, post_id):
-        likes = Like.query.filter_by(post_id=post_id).all()
-        return likes
-
-    # get like author details from author id
-    @classmethod
-    def get_like_author(cls, user_id):
-        author = User.query.filter_by(id=user_id).first()
-        return author
 
 # class to save dislikes
 
