@@ -34,7 +34,7 @@
                     {{ pitch.body[:100] }} ....
                 </p>
                 <!-- read more -->
-                <a class="text-center text-danger">
+                <a href="{{ url_for('main.pitch', id = pitch.id)}}" class="text-center text-danger">
                     Read More
                     <i class="fa fa-arrow-right"></i>
                 </a>
