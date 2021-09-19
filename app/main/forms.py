@@ -44,3 +44,8 @@ class UpdateProfileForm(FlaskForm):
 class CommentForm(FlaskForm):
     body = TextAreaField('Comment', validators=[Required()])
     submit = SubmitField('Submit')
+
+
+class CategoryForm(FlaskForm):
+    name = StringField('Category Name', validators=[Required(), Length(1, 64)])
+    submit = SubmitField('Submit')

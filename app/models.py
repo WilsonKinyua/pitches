@@ -19,6 +19,11 @@ class Category(db.Model):
     def get_all_categories():
         return Category.query.all()
 
+    # save category
+    def save_category(self):
+        db.session.add(self)
+        db.session.commit()
+
     def __repr__(self):
         return '<Category %r>' % self.name
 

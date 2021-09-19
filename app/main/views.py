@@ -3,7 +3,7 @@ from . import main
 from flask_login import login_required, current_user
 from ..models import User, Role, Post, Comment, Dislike, Like, Category
 from .. import db, photos
-from .forms import UpdateProfileForm, CommentForm
+from .forms import UpdateProfileForm, CommentForm,CategoryForm
 from slugify import slugify
 
 # homepage
@@ -13,6 +13,18 @@ def getAuthor(id):
     user = User.query.filter_by(id=id).first()
     return user
 
+# add a category to the database
+@main.route('/add_category', methods=['GET', 'POST'])
+@login_required
+def add_category():
+    form = CategoryForm()
+    if form.validate_on_submit():
+        category = Category(name=form.name.data)
+        db.session.add(category)
+        db.session.commit()
+        flash('Category added successfully.')
+        return redirect(url_for('.index'))
+    return render_template('add_category.html', form=form)
 
 @main.route('/')
 # @login_required
