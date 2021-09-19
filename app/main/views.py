@@ -106,6 +106,8 @@ def new_pitch():
 
 @main.route('/pitch/<int:id>', methods=['GET', 'POST'])
 def pitch(id):
+    # get all comments of the pitch
+    comments = Comment.query.filter_by(post_id=id).all()
     pitch = Post.query.get(id)
     if pitch is None:
         abort(404)
@@ -118,9 +120,10 @@ def pitch(id):
         )
         db.session.add(comment)
         db.session.commit()
-        flash('Your comment has been posted!', 'success')
+        flash('Your comment has been posted successfully!', 'success')
+
     return render_template('single_pitch.html',
                            pitch=pitch,
-                           form=form
-                           #  comments=comments
+                           form=form,
+                           comments=comments
                            )

@@ -297,7 +297,6 @@ a {
 /* single pitch */
 .img-box img {
   border-radius: 50%;
-  height: 60px;
-  line-height: 32px;
-  width: 60px;
+  height: 50px;
+  width: 50px;
 }
