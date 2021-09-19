@@ -2,22 +2,44 @@
 
 {% block content %}
 <div class="row">
+    <!-- <div class="col-md-12">
+        <div class="card m-4">
+            <p class="m-2">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis accusamus nulla recusandae
+                praesentium enim, distinctio quasi minima dicta ipsa maiores.
+            </p>
+        </div>
+    </div> -->
     <div class="col-md-6">
         <div class="row">
             <div class="col-md-12 m-5">
+
+
                 <div class="card">
                     <div class="d-flex justify-content-start">
-                        <div class="mt-2">
+                        <div class="img-box">
+                            <img src="http://127.0.0.1:5000/static/photos/4354_8505_372574001623164824.jpeg" alt=""
+                                class="img-fluid">
+                        </div>
+                        <div class="m-2 mt-4">
                             <h6>John doe</h6>
                         </div>
-                        <div class="mt-2">
+                        <div class="m-2 mt-4">
                             <h6> <i class="fa fa-clock"></i> <span>
-                                    34
+                                    16 Sep 2021
                                 </span>
                             </h6>
                         </div>
                     </div>
+                    <p class="m-2">
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis accusamus nulla recusandae
+                        praesentium enim, distinctio quasi minima dicta ipsa maiores.
+                    </p>
                 </div>
+
+
+
+
             </div>
         </div>
     </div>
@@ -25,14 +47,14 @@
         <!-- add comment form -->
         <div class="card m-5">
             <div class="card-body">
-                <form  method="POST"
-                    class="form-horizontal">
+                <form method="POST" class="form-horizontal">
                     <div class="form-group">
                         <label for="comment" class="control-label">Comment</label>
-                            <textarea class="form-control" id="comment" name="comment" placeholder="Leave a comment here....." rows="3"></textarea>
+                        <textarea class="form-control" id="comment" name="comment"
+                            placeholder="Leave a comment here....." rows="3"></textarea>
                     </div>
                     <div class="form-group mt-3">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>

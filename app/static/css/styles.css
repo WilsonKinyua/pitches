@@ -282,7 +282,6 @@ a {
   color: #ff0000;
 }
 
-
 /* profile page */
 .card-img-top {
   border-radius: 50%;
@@ -293,4 +292,12 @@ a {
   margin: 0 auto;
   width: 180px;
   margin-top: 6px;
+}
+
+/* single pitch */
+.img-box img {
+  border-radius: 50%;
+  height: 60px;
+  line-height: 32px;
+  width: 60px;
 }
