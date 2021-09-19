@@ -3,7 +3,7 @@ from . import main
 from flask_login import login_required, current_user
 from ..models import User, Role, Post, Comment, Dislike, Like, Category
 from .. import db, photos
-from .forms import UpdateProfileForm, CommentForm,CategoryForm
+from .forms import UpdateProfileForm, CommentForm, CategoryForm
 from slugify import slugify
 
 # homepage
@@ -14,6 +14,8 @@ def getAuthor(id):
     return user
 
 # add a category to the database
+
+
 @main.route('/add_category', methods=['GET', 'POST'])
 @login_required
 def add_category():
@@ -25,6 +27,7 @@ def add_category():
         flash('Category added successfully.')
         return redirect(url_for('.index'))
     return render_template('add_category.html', form=form)
+
 
 @main.route('/')
 # @login_required
@@ -139,6 +142,7 @@ def pitch(id):
         db.session.commit()
         form.body.data = ''
         flash('Your comment has been posted successfully!', 'success')
+        return redirect(url_for('.pitch', pitch=pitch, form=form, comments=comments,id=id))
 
     return render_template('single_pitch.html',
                            pitch=pitch,

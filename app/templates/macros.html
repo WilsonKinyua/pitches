@@ -2,7 +2,7 @@
 {% macro displayPitches(pitch_list) %}
 
 {% for pitch in pitch_list %}
-<div class="col-md-3">
+<div class="col-md-4">
     <a href="{{ url_for('main.pitch', id = pitch.id)}}">
         <div class="card latest-cards">
             <div class="latest-cards-body m-2">
