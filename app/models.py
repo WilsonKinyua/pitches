@@ -14,6 +14,11 @@ class Category(db.Model):
     picture_path = db.Column(db.String(64))
     post = db.relationship('Post', backref='category', lazy='dynamic')
 
+    # get all categories
+    @staticmethod
+    def get_all_categories():
+        return Category.query.all()
+
     def __repr__(self):
         return '<Category %r>' % self.name
 
@@ -71,6 +76,7 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     like = db.relationship('Like', backref='post', lazy='dynamic')
     dislike = db.relationship('Dislike', backref='post', lazy='dynamic')
+    comment = db.relationship('Comment', backref='post', lazy='dynamic')
 
     # gets posts by category
 

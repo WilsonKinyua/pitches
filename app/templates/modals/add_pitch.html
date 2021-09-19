@@ -20,11 +20,9 @@
                             <div class="mb-2">
                                 <label for="Category" class="mb-2">Category <span class="text-danger">*</span></label>
                                 <select class="form-control" name="category_id" required>
-                                    <option value="1">Business</option>
-                                    <!-- <option value="2">Technology</option>
-                                    <option value="3">Entertainment</option>
-                                    <option value="4">Health</option>
-                                    <option value="5">Sports</option> -->
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>

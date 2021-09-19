@@ -50,7 +50,10 @@ def profile(username):
     pitches = Post.get_posts_by_author(
         user.id).order_by(Post.timestamp.desc()).all()
 
-    return render_template('profile/profile.html', user=user, form=form, pitches=pitches)
+    # get all categories
+    categories = Category.get_all_categories()
+
+    return render_template('profile/profile.html', user=user, form=form, pitches=pitches, categories=categories)
 
 
 # update profile picture
@@ -184,3 +187,32 @@ def dislike(id):
     db.session.commit()
     flash('You have successfully disliked the pitch!', 'success')
     return redirect(url_for('.index'))
+
+
+# delete a pitch
+@main.route('/delete_pitch/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_pitch(id):
+    pitch = Post.query.get(id)
+    if pitch is None:
+        abort(404)
+    # check if the pitch has comments, like and dislike, if yes, delete all comments, likes and dislikes
+    if pitch.comment:
+        for comment in pitch.comment:
+            db.session.delete(comment)
+            db.session.commit()
+            
+    if pitch.like:
+        for like in pitch.like:
+            db.session.delete(like)
+            db.session.commit()
+
+    if pitch.dislike:
+        for dislike in pitch.dislike:
+            db.session.delete(dislike)
+            db.session.commit()
+
+    db.session.delete(pitch)
+    db.session.commit()
+    flash('You have successfully deleted the pitch!', 'danger')
+    return redirect(url_for('.profile', username=current_user.username))
