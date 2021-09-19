@@ -15,18 +15,14 @@
                             alt="{{ pitch.title }}">
                         {% endif %}
                     </div>
-                    <div class="mt-2">
-                        <h6>{{ pitch.user.name }}</h6>
-                    </div>
-                    <div class="mt-2">
-                        <h6> <i class="fa fa-clock"></i> <span>
+                    <div class="">
+                        <h6>{{ pitch.user.name }}
+                            <br>
+                            <span style="font-size: 13px;">
+                                <i class="fa fa-clock"></i>
                                 {{ pitch.timestamp.strftime("%d %b %Y") }}
                             </span>
                         </h6>
-                    </div>
-                    <div class="mt-2">
-                        <!-- like button -->
-
                     </div>
                 </div>
                 <div class="card-header">
