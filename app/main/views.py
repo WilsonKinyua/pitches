@@ -35,6 +35,7 @@ def profile(username):
         abort(404)
     form = UpdateProfileForm()
     if form.validate_on_submit():
+        user.name = form.name.data
         user.email = form.email.data
         user.username = form.username.data
         user.about_me = form.about_me.data

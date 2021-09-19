@@ -30,16 +30,10 @@
             </td>
             <td>{{ pitch.timestamp.strftime('%d %b %Y') }}</td>
             <td>
-                <a href="{{ url_for('main.delete_pitch',id=pitch.id)}}" class="text-danger"><small><i class="fa fa-trash"></i></small></a>
+                <a href="{{ url_for('main.delete_pitch',id=pitch.id)}}" class="text-danger"><small><i
+                            class="fa fa-trash"></i></small></a>
             </td>
         </tr>
         {% endfor %}
-        <!-- <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr> -->
     </tbody>
 </table>
